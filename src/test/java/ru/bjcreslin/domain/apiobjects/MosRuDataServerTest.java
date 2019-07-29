@@ -32,13 +32,13 @@ class MosRuDataServerTest {
 
     @Test
     void getApikey() {
-        Assert.assertTrue(mosRuDataServer.getApikey().equalsIgnoreCase("?api_key=586d058a1a8ef94f0cd1105d4c0550e9"));
+        Assert.assertTrue(mosRuDataServer.getApikey().equalsIgnoreCase("api_key=586d058a1a8ef94f0cd1105d4c0550e9"));
     }
 
     @Test
     void generatedAdress() {
-        String webAdressPart = "{333}/count";
-        Assert.assertTrue(mosRuDataServer.generatedAdress(webAdressPart).equalsIgnoreCase("https://apidata.mos.ru/v1/" + webAdressPart +
-                mosRuDataServer.getApikey()));
+        String webAdressPart = "333/count";
+        Assert.assertTrue(mosRuDataServer.generatedAdress(webAdressPart).equalsIgnoreCase(
+                "https://apidata.mos.ru/v1/datasets/333/count?api_key=586d058a1a8ef94f0cd1105d4c0550e9"));
     }
 }

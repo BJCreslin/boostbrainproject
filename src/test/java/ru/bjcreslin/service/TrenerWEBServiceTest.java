@@ -3,9 +3,10 @@ package ru.bjcreslin.service;
 import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import ru.bjcreslin.domain.Trener;
 import ru.bjcreslin.domain.apiobjects.MosRuDataServer;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.List;
 
 class TrenerWEBServiceTest {
     WebService webService;
@@ -20,5 +21,11 @@ class TrenerWEBServiceTest {
         int count = webService.getCount();
         System.out.println(count);
         Assert.assertTrue(count > -1);
+    }
+
+    @Test
+    void getAll() {
+        List<Trener> trenerList = webService.getAll();
+        System.out.println(trenerList.size());
     }
 }

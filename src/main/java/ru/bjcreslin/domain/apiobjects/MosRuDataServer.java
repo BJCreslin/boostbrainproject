@@ -1,5 +1,7 @@
 package ru.bjcreslin.domain.apiobjects;
 
+import lombok.extern.java.Log;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -9,7 +11,7 @@ import java.net.URL;
  * Портал открытых данных Правительства Москвы
  * https://apidata.mos.ru/
  */
-
+@Log
 public class MosRuDataServer extends DataObiect {
     private static final String APIKEY = "586d058a1a8ef94f0cd1105d4c0550e9";
     private static final String WEBADRESS = "https://apidata.mos.ru/";
@@ -21,7 +23,7 @@ public class MosRuDataServer extends DataObiect {
      * @return String
      */
     String getApikey() {
-        return "?api_key=" + APIKEY;
+        return "api_key=" + APIKEY;
     }
 
     /**
@@ -67,7 +69,10 @@ public class MosRuDataServer extends DataObiect {
     }
 
     @Override
-   public String generatedAdress(String adressPart) {
-        return WEBADRESS + VERSIONAPI +"/datasets/" + adressPart + getApikey();
+    public String generatedAdress(String adressPart) {
+        String separationCharacter = (adressPart.contains("?")) ? "&" : "?";
+        String result= WEBADRESS + VERSIONAPI + "/datasets/" + adressPart + separationCharacter + getApikey();
+        log.info(result);
+        return result;
     }
 }
