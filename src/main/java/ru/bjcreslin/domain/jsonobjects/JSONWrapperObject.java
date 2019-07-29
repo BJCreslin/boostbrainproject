@@ -9,10 +9,8 @@ public class JSONWrapperObject {
     private Long number;
     @JsonAlias("global_id")
     private float global_id;
-
     @JsonAlias("Cells")
     JSONTrenerObject cells;
-
 
 }
 

@@ -1,11 +1,13 @@
 package ru.bjcreslin.domain.apiobjects;
 
 import lombok.extern.java.Log;
+import ru.bjcreslin.exceptions.ErrorConectionToMosRuServer;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Портал открытых данных Правительства Москвы
@@ -32,7 +34,7 @@ public class MosRuDataServer extends DataObiect {
      * @return String в JSON с текущей версией API
      */
     @Override
-    public String getApiversion() {
+    public String getApiversion() throws ErrorConectionToMosRuServer {
         String address = WEBADRESS + "version";
         String x = getPageFromUrl(address);
         if (x != null) return x;
@@ -48,12 +50,12 @@ public class MosRuDataServer extends DataObiect {
 
 
     @Override
-    public String getPageFromUrl(String adress) {
+    public String getPageFromUrl(String adress) throws ErrorConectionToMosRuServer {
         StringBuilder text = new StringBuilder();
         try {
             URL url = new URL(adress);
             BufferedReader reader = new BufferedReader(
-                    new InputStreamReader(url.openConnection().getInputStream(), "UTF-8"));
+                    new InputStreamReader(url.openConnection().getInputStream(), StandardCharsets.UTF_8));
             String line;
             while (true) {
                 line = reader.readLine();
@@ -61,9 +63,9 @@ public class MosRuDataServer extends DataObiect {
                     break;
                 text.append(line);
             }
-
         } catch (IOException e) {
-            return "Error Connection";
+            log.severe("Error Connection in getPageFromUrl");
+            throw new ErrorConectionToMosRuServer(e.getMessage());
         }
         return text.toString();
     }
@@ -71,7 +73,7 @@ public class MosRuDataServer extends DataObiect {
     @Override
     public String generatedAdress(String adressPart) {
         String separationCharacter = (adressPart.contains("?")) ? "&" : "?";
-        String result= WEBADRESS + VERSIONAPI + "/datasets/" + adressPart + separationCharacter + getApikey();
+        String result = WEBADRESS + VERSIONAPI + "/datasets/" + adressPart + separationCharacter + getApikey();
         log.info(result);
         return result;
     }
