@@ -2,7 +2,6 @@ package ru.bjcreslin.domain.apiobjects;
 
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.jupiter.api.Test;
 
 class MosRuDataServerTest {
@@ -34,5 +33,12 @@ class MosRuDataServerTest {
     @Test
     void getApikey() {
         Assert.assertTrue(mosRuDataServer.getApikey().equalsIgnoreCase("?api_key=586d058a1a8ef94f0cd1105d4c0550e9"));
+    }
+
+    @Test
+    void generatedAdress() {
+        String webAdressPart = "{333}/count";
+        Assert.assertTrue(mosRuDataServer.generatedAdress(webAdressPart).equalsIgnoreCase("https://apidata.mos.ru/v1/" + webAdressPart +
+                mosRuDataServer.getApikey()));
     }
 }

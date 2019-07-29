@@ -13,13 +13,14 @@ import java.net.URL;
 public class MosRuDataServer extends DataObiect {
     private static final String APIKEY = "586d058a1a8ef94f0cd1105d4c0550e9";
     private static final String WEBADRESS = "https://apidata.mos.ru/";
-    private static final String VERSIONAPI = "1";
+    private static final String VERSIONAPI = "v1";
 
     /**
-     * Возвращает част вебадреса с АПИКЕЙ
+     * Возвращает часть вебадреса с АПИКЕЙ
+     *
      * @return String
      */
-     String getApikey() {
+    String getApikey() {
         return "?api_key=" + APIKEY;
     }
 
@@ -42,6 +43,8 @@ public class MosRuDataServer extends DataObiect {
      * @param adress -web adress
      * @return Веб страницу в виде текста
      */
+
+
     @Override
     public String getPageFromUrl(String adress) {
         StringBuilder text = new StringBuilder();
@@ -61,5 +64,10 @@ public class MosRuDataServer extends DataObiect {
             return "Error Connection";
         }
         return text.toString();
+    }
+
+    @Override
+   public String generatedAdress(String adressPart) {
+        return WEBADRESS + VERSIONAPI +"/datasets/" + adressPart + getApikey();
     }
 }

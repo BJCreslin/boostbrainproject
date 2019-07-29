@@ -6,4 +6,5 @@ public abstract class DataObiect {
 
     abstract String getPageFromUrl(String address);
 
+    abstract String generatedAdress(String adressPart);
 }
