@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.bjcreslin.domain.Trener;
 import ru.bjcreslin.domain.apiobjects.MosRuDataServer;
+import ru.bjcreslin.domain.jsonobjects.JSONWrapperObject;
 
 import java.util.List;
 
@@ -25,7 +26,7 @@ class TrenerWEBServiceTest {
 
     @Test
     void getAll() {
-        List<Trener> trenerList = webService.getAll();
+        List<JSONWrapperObject> trenerList = webService.getAll();
         System.out.println(trenerList.size());
     }
 }
