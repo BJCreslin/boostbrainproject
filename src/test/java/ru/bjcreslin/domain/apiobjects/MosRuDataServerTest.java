@@ -3,6 +3,7 @@ package ru.bjcreslin.domain.apiobjects;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
+import ru.bjcreslin.exceptions.ErrorConectionToMosRuServer;
 
 class MosRuDataServerTest {
     private MosRuDataServer mosRuDataServer;
@@ -13,19 +14,19 @@ class MosRuDataServerTest {
     }
 
     @org.junit.jupiter.api.Test
-    void getApiversionIsString() {
+    void getApiversionIsString() throws ErrorConectionToMosRuServer {
 
         Assert.assertTrue(mosRuDataServer.getApiversion().getClass() == String.class);
     }
 
     @Test
-    void getPageFromUrl() {
+    void getPageFromUrl() throws ErrorConectionToMosRuServer {
         String address = "https://apidata.mos.ru/version";
         Assert.assertTrue(mosRuDataServer.getPageFromUrl(address).equalsIgnoreCase("{\"Version\":1}"));
     }
 
     @Test
-    void getApiversion() {
+    void getApiversion() throws ErrorConectionToMosRuServer {
         Assert.assertTrue(mosRuDataServer.getApiversion().equalsIgnoreCase("{\"Version\":1}"));
     }
 

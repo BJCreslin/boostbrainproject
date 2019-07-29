@@ -1,6 +1,7 @@
 package ru.bjcreslin.service;
 
 import ru.bjcreslin.domain.jsonobjects.JSONWrapperObject;
+import ru.bjcreslin.exceptions.ErrorConectionToMosRuServer;
 import ru.bjcreslin.exceptions.ErrorParsingTxtJsonToPojo;
 
 import java.util.List;
@@ -12,12 +13,12 @@ public interface WebService {
      *
      * @return int- количество
      */
-    int getCount();
+    int getCount() throws ErrorConectionToMosRuServer;
 
     /**
      * Получает все данные с сайта и возращает list POJO
      */
-    List<JSONWrapperObject> getAll() throws ErrorParsingTxtJsonToPojo;
+    List<JSONWrapperObject> getAll() throws ErrorParsingTxtJsonToPojo, ErrorConectionToMosRuServer;
 
     /**
      * Получает текстовые данные с Сервера.
@@ -27,7 +28,7 @@ public interface WebService {
      *
      * @return строка с данными
      */
-    String getTextJSONData();
+    String getTextJSONData() throws ErrorConectionToMosRuServer;
 
     /**
      * преобразует тект в лист POJO

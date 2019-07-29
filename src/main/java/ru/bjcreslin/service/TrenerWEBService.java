@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.java.Log;
 import ru.bjcreslin.domain.apiobjects.MosRuDataServer;
 import ru.bjcreslin.domain.jsonobjects.JSONWrapperObject;
+import ru.bjcreslin.exceptions.ErrorConectionToMosRuServer;
 import ru.bjcreslin.exceptions.ErrorParsingTxtJsonToPojo;
 
 import java.io.IOException;
@@ -14,28 +15,31 @@ import java.util.List;
 public class TrenerWEBService implements WebService {
     private static final String ID_DATA_GROUPE = "61321"; // "Id": 61321,  - ID данных по тренерам
     private MosRuDataServer dataServer;
+    private static int count = 0;
 
     public TrenerWEBService(MosRuDataServer dataServer) {
         this.dataServer = dataServer;
     }
 
     @Override
-    public int getCount() {
-
-        String urlForReceice = dataServer.generatedAdress(ID_DATA_GROUPE + "/count");
-        String count = dataServer.getPageFromUrl(urlForReceice);
-        return Integer.parseInt(count);
+    public int getCount() throws ErrorConectionToMosRuServer {
+        /*Если данные по count уже есть, то берем их */
+        if (count == 0) {
+            String urlForReceice = dataServer.generatedAdress(ID_DATA_GROUPE + "/count");
+            count = Integer.parseInt(dataServer.getPageFromUrl(urlForReceice));
+        }
+        return count;
     }
 
     @Override
-    public List<JSONWrapperObject> getAll() throws ErrorParsingTxtJsonToPojo {
+    public List<JSONWrapperObject> getAll() throws ErrorParsingTxtJsonToPojo, ErrorConectionToMosRuServer {
         String txt = getTextJSONData();
         return textToArrayOfJsonConverter(txt);
     }
 
     @Override
     public List<JSONWrapperObject> textToArrayOfJsonConverter(String txt) throws ErrorParsingTxtJsonToPojo {
-        List<JSONWrapperObject> resultList ;
+        List<JSONWrapperObject> resultList;
         ObjectMapper mapper = new ObjectMapper();
         try {
             resultList = Arrays.asList(mapper.readValue(txt, JSONWrapperObject[].class));
@@ -49,7 +53,7 @@ public class TrenerWEBService implements WebService {
     }
 
     @Override
-    public String getTextJSONData() {
+    public String getTextJSONData() throws ErrorConectionToMosRuServer {
         int countAll = getCount();
         StringBuilder txt = new StringBuilder();
         String urlForReceice = "";

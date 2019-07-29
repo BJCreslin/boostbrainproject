@@ -3,14 +3,15 @@ package ru.bjcreslin.service;
 import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import ru.bjcreslin.domain.Trener;
 import ru.bjcreslin.domain.apiobjects.MosRuDataServer;
 import ru.bjcreslin.domain.jsonobjects.JSONWrapperObject;
+import ru.bjcreslin.exceptions.ErrorConectionToMosRuServer;
+import ru.bjcreslin.exceptions.ErrorParsingTxtJsonToPojo;
 
 import java.util.List;
 
 class TrenerWEBServiceTest {
-    WebService webService;
+    private WebService webService;
 
     @BeforeEach
     void SetUp() {
@@ -18,14 +19,14 @@ class TrenerWEBServiceTest {
     }
 
     @Test
-    void getCount() {
+    void getCount() throws ErrorConectionToMosRuServer {
         int count = webService.getCount();
         System.out.println(count);
         Assert.assertTrue(count > -1);
     }
 
     @Test
-    void getAll() {
+    void getAll() throws ErrorParsingTxtJsonToPojo, ErrorConectionToMosRuServer {
         List<JSONWrapperObject> trenerList = webService.getAll();
         System.out.println(trenerList.size());
     }
