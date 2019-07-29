@@ -8,7 +8,8 @@ import java.util.List;
 
 @Log
 public class TrenerWEBService implements WebService {
-    private static final String ID_DATA_GROUPE = "61321";
+
+    private static final String ID_DATA_GROUPE = "61321"; // "Id": 61321,  - ID данных по тренерам
 
     public TrenerWEBService(MosRuDataServer dataServer) {
         this.dataServer = dataServer;
@@ -27,10 +28,14 @@ public class TrenerWEBService implements WebService {
 
     @Override
     public List<Trener> getAll() {
-        String urlForReceice = dataServer.generatedAdress(ID_DATA_GROUPE + "/rows" + "?$top=1");
-        log.info(urlForReceice);
-        String txt = dataServer.getPageFromUrl(urlForReceice);
-        System.out.println(txt);
+        int countAll = getCount();
+        StringBuilder txt = new StringBuilder();
+        for (int i = 1; i <= countAll; i += 500) {
+            String urlForReceice = dataServer.generatedAdress(ID_DATA_GROUPE + "/rows" + "?$top=" + 500 + "&$skip=" + i);
+            log.info(urlForReceice);
+            txt.append(dataServer.getPageFromUrl(urlForReceice));
+        }
+        System.out.println(txt.toString());
         return null;
     }
 
