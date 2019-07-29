@@ -1,12 +1,14 @@
 package ru.bjcreslin.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "treners")
-public class Trener extends People {
+public class Trener {
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private long id;
     @Column(name="name")
     private String name;
 
