@@ -1,6 +1,7 @@
 package ru.bjcreslin.service;
 
 import ru.bjcreslin.domain.jsonobjects.JSONWrapperObject;
+import ru.bjcreslin.exceptions.ErrorParsingTxtJsonToPojo;
 
 import java.util.List;
 
@@ -16,7 +17,7 @@ public interface WebService {
     /**
      * Получает все данные с сайта и возращает list POJO
      */
-    List<JSONWrapperObject> getAll();
+    List<JSONWrapperObject> getAll() throws ErrorParsingTxtJsonToPojo;
 
     /**
      * Получает текстовые данные с Сервера.
@@ -34,5 +35,5 @@ public interface WebService {
      * @param txt
      * @return list
      */
-    List<JSONWrapperObject> textToArrayOfJsonConverter(String txt);
+    List<JSONWrapperObject> textToArrayOfJsonConverter(String txt) throws ErrorParsingTxtJsonToPojo;
 }
