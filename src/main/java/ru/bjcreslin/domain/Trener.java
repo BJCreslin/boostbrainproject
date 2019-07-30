@@ -1,9 +1,12 @@
 package ru.bjcreslin.domain;
 
+import lombok.Builder;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "treners")
+@Builder
 public class Trener {
     @Id
     @Column(name = "id")
