@@ -34,7 +34,6 @@ public class MosDataWebContoller {
             model.addAttribute("errorText", "шибка получения версии API");
             return "errorpage";
         }
-
         return "versionapi";
     }
 
@@ -42,18 +41,30 @@ public class MosDataWebContoller {
     public String getVersionDatasets(Model model) {
         try {
             DataSetsVersion version = trenerWEBService.getDataSetsVersion();
-            String txtOUT = "Текущая версия абора данных:" + version.getVersionNumber() +
+            String txtOUT = "Текущая версия набора данных:" + version.getVersionNumber() +
                     ". Текущий релиз: " + version.getReleaseNumber();
             model.addAttribute("textAPI", txtOUT);
         } catch (ErrorConectionToMosRuServer errorConectionToMosRuServer) {
-            model.addAttribute("errorText", "шибка соединения с сервером МОСДАТА");
+            model.addAttribute("errorText", "Ошибка соединения с сервером МОСДАТА");
             return "errorpage";
         } catch (ErrorApiVersionCheck errorApiVersionCheck) {
-            model.addAttribute("errorText", "шибка получения версии.");
+            model.addAttribute("errorText", "Ошибка получения версии.");
             return "errorpage";
         }
-
         return "versionapi";
 
+    }
+
+    @GetMapping("/number")
+    public String getNumber(Model model) {
+        try {
+            int count = trenerWEBService.getCount();
+            String txtOUT = "Количество данных в наборе данных: " + count;
+            model.addAttribute("textAPI", txtOUT);
+        } catch (ErrorConectionToMosRuServer errorConectionToMosRuServer) {
+            model.addAttribute("errorText", "Ошибка соединения с сервером МОСДАТА");
+            return "errorpage";
+        }
+        return "versionapi";
     }
 }

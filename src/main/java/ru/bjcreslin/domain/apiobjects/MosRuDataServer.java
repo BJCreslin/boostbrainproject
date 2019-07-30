@@ -92,7 +92,7 @@ public class MosRuDataServer extends DataObiect {
 
     @Override
     public DataSetsVersion getDataSetsVersion(int idDataSets) throws ErrorConectionToMosRuServer, ErrorApiVersionCheck {
-        String adress = generatedAdress(Integer.toString(idDataSets));
+        String adress = generatedAdress(Integer.toString(idDataSets)+"/version");
         String textWithAnswer = getPageFromUrl(adress);
         ObjectMapper mapper = new ObjectMapper();
         DataSetsVersion dataSetsVersion;
