@@ -9,6 +9,7 @@ import ru.bjcreslin.domain.jsonobjects.APIVersion;
 import ru.bjcreslin.domain.jsonobjects.DataSetsVersion;
 import ru.bjcreslin.exceptions.ErrorApiVersionCheck;
 import ru.bjcreslin.exceptions.ErrorConectionToMosRuServer;
+import ru.bjcreslin.exceptions.ErrorParsingTxtJsonToPojo;
 import ru.bjcreslin.service.TrenerWEBService;
 
 @RequestMapping("mosdata")
@@ -58,13 +59,26 @@ public class MosDataWebContoller {
     @GetMapping("/number")
     public String getNumber(Model model) {
         try {
-            int count = trenerWEBService.getCount();
-            String txtOUT = "Количество данных в наборе данных: " + count;
+            String txtOUT = "Количество данных в наборе данных: " + trenerWEBService.getCount();
             model.addAttribute("textAPI", txtOUT);
         } catch (ErrorConectionToMosRuServer errorConectionToMosRuServer) {
             model.addAttribute("errorText", "Ошибка соединения с сервером МОСДАТА");
             return "errorpage";
         }
         return "versionapi";
+    }
+
+
+    @GetMapping("loaddata")
+    public String getData(Model model) {
+        try {
+            trenerWEBService.getAll();
+        } catch (ErrorParsingTxtJsonToPojo errorParsingTxtJsonToPojo) {
+            model.addAttribute("errorText", "Ошибка получения данных с сервера МОСДАТА");
+            return "errorpage";
+        } catch (ErrorConectionToMosRuServer errorConectionToMosRuServer) {
+            model.addAttribute("errorText", "Ошибка соединения с сервером МОСДАТА");
+            return "errorpage";
+        }
     }
 }
