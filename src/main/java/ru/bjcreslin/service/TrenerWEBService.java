@@ -2,8 +2,11 @@ package ru.bjcreslin.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.java.Log;
+import org.springframework.stereotype.Service;
+import ru.bjcreslin.domain.jsonobjects.APIVersion;
 import ru.bjcreslin.domain.apiobjects.MosRuDataServer;
 import ru.bjcreslin.domain.jsonobjects.JSONWrapperObject;
+import ru.bjcreslin.exceptions.ErrorApiVersionCheck;
 import ru.bjcreslin.exceptions.ErrorConectionToMosRuServer;
 import ru.bjcreslin.exceptions.ErrorParsingTxtJsonToPojo;
 
@@ -12,6 +15,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Log
+@Service
 public class TrenerWEBService implements WebService {
     private static final String ID_DATA_GROUPE = "61321"; // "Id": 61321,  - ID данных по тренерам
     private MosRuDataServer dataServer;
@@ -50,6 +54,11 @@ public class TrenerWEBService implements WebService {
         }
         log.info("количество полученных данных " + resultList.size());
         return resultList;
+    }
+
+    @Override
+    public APIVersion getVersionApi() throws ErrorConectionToMosRuServer, ErrorApiVersionCheck {
+        return dataServer.getApiversion();
     }
 
     @Override

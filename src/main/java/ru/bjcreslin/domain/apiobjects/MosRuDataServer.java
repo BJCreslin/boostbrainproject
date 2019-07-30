@@ -1,6 +1,10 @@
 package ru.bjcreslin.domain.apiobjects;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.java.Log;
+import org.springframework.stereotype.Component;
+import ru.bjcreslin.domain.jsonobjects.APIVersion;
+import ru.bjcreslin.exceptions.ErrorApiVersionCheck;
 import ru.bjcreslin.exceptions.ErrorConectionToMosRuServer;
 
 import java.io.BufferedReader;
@@ -14,6 +18,7 @@ import java.nio.charset.StandardCharsets;
  * https://apidata.mos.ru/
  */
 @Log
+@Component
 public class MosRuDataServer extends DataObiect {
     private static final String APIKEY = "586d058a1a8ef94f0cd1105d4c0550e9";
     private static final String WEBADRESS = "https://apidata.mos.ru/";
@@ -34,11 +39,17 @@ public class MosRuDataServer extends DataObiect {
      * @return String в JSON с текущей версией API
      */
     @Override
-    public String getApiversion() throws ErrorConectionToMosRuServer {
+    public APIVersion getApiversion() throws ErrorConectionToMosRuServer, ErrorApiVersionCheck {
         String address = WEBADRESS + "version";
         String x = getPageFromUrl(address);
-        if (x != null) return x;
-        return VERSIONAPI;
+        ObjectMapper mapper = new ObjectMapper();
+        APIVersion apiVersion;
+        try {
+            apiVersion = mapper.readValue(x, APIVersion.class);
+        } catch (IOException e) {
+            throw new ErrorApiVersionCheck(e.getMessage());
+        }
+        return apiVersion;
     }
 
     /**

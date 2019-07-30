@@ -1,6 +1,8 @@
 package ru.bjcreslin.service;
 
+import ru.bjcreslin.domain.jsonobjects.APIVersion;
 import ru.bjcreslin.domain.jsonobjects.JSONWrapperObject;
+import ru.bjcreslin.exceptions.ErrorApiVersionCheck;
 import ru.bjcreslin.exceptions.ErrorConectionToMosRuServer;
 import ru.bjcreslin.exceptions.ErrorParsingTxtJsonToPojo;
 
@@ -37,4 +39,10 @@ public interface WebService {
      * @return list
      */
     List<JSONWrapperObject> textToArrayOfJsonConverter(String txt) throws ErrorParsingTxtJsonToPojo;
+
+    /**
+     * ерсия api
+     * @return api
+     */
+    APIVersion getVersionApi() throws ErrorConectionToMosRuServer, ErrorApiVersionCheck;
 }

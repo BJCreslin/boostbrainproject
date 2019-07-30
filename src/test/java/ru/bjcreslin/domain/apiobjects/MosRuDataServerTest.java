@@ -3,6 +3,8 @@ package ru.bjcreslin.domain.apiobjects;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
+import ru.bjcreslin.domain.jsonobjects.APIVersion;
+import ru.bjcreslin.exceptions.ErrorApiVersionCheck;
 import ru.bjcreslin.exceptions.ErrorConectionToMosRuServer;
 
 class MosRuDataServerTest {
@@ -14,9 +16,9 @@ class MosRuDataServerTest {
     }
 
     @org.junit.jupiter.api.Test
-    void getApiversionIsString() throws ErrorConectionToMosRuServer {
+    void getApiversionIsString() throws ErrorConectionToMosRuServer, ErrorApiVersionCheck {
 
-        Assert.assertTrue(mosRuDataServer.getApiversion().getClass() == String.class);
+        Assert.assertTrue(mosRuDataServer.getApiversion().getClass() == APIVersion.class);
     }
 
     @Test
@@ -26,8 +28,8 @@ class MosRuDataServerTest {
     }
 
     @Test
-    void getApiversion() throws ErrorConectionToMosRuServer {
-        Assert.assertTrue(mosRuDataServer.getApiversion().equalsIgnoreCase("{\"Version\":1}"));
+    void getApiversion() throws ErrorConectionToMosRuServer, ErrorApiVersionCheck {
+        Assert.assertTrue(mosRuDataServer.getApiversion().version.equalsIgnoreCase("1"));
     }
 
 
