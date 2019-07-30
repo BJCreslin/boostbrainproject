@@ -8,7 +8,7 @@
 <div th:fragment="main">
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark navbar-fixed-top">
         <!-- Brand -->
-        <img src="../img/bblogo.jpg" align="left" width="32">
+        <img src="../img/bblogo.jpg" align="left" width="32" alt="img">
         <a class="navbar-brand" href="#">BoostTBrain</a>
 
         <!-- Links -->
@@ -21,11 +21,11 @@
             <!-- Dropdown -->
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbardrop1" data-toggle="dropdown">
-                   Мос Дата
+                    Мос Дата
                 </a>
                 <div class="dropdown-menu">
                     <a class="dropdown-item" th:href="@{/mosdata/versionAPI}">Версия API сервера</a>
-                    <a class="dropdown-item" th:href="@{/all/add}">Add All</a>
+                    <a class="dropdown-item" th:href="@{/mosdata/versionDatasets}">Версия данных сервера</a>
                 </div>
 
             </li>

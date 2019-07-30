@@ -29,7 +29,7 @@ class MosRuDataServerTest {
 
     @Test
     void getApiversion() throws ErrorConectionToMosRuServer, ErrorApiVersionCheck {
-        Assert.assertTrue(mosRuDataServer.getApiversion().version.equalsIgnoreCase("1"));
+        Assert.assertTrue(mosRuDataServer.getApiversion().getVersion().equalsIgnoreCase("1"));
     }
 
 

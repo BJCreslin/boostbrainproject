@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.java.Log;
 import org.springframework.stereotype.Component;
 import ru.bjcreslin.domain.jsonobjects.APIVersion;
+import ru.bjcreslin.domain.jsonobjects.DataSetsVersion;
 import ru.bjcreslin.exceptions.ErrorApiVersionCheck;
 import ru.bjcreslin.exceptions.ErrorConectionToMosRuServer;
 
@@ -87,5 +88,20 @@ public class MosRuDataServer extends DataObiect {
         String result = WEBADRESS + VERSIONAPI + "/datasets/" + adressPart + separationCharacter + getApikey();
         log.info(result);
         return result;
+    }
+
+    @Override
+    public DataSetsVersion getDataSetsVersion(int idDataSets) throws ErrorConectionToMosRuServer, ErrorApiVersionCheck {
+        String adress = generatedAdress(Integer.toString(idDataSets));
+        String textWithAnswer = getPageFromUrl(adress);
+        ObjectMapper mapper = new ObjectMapper();
+        DataSetsVersion dataSetsVersion;
+
+        try {
+            dataSetsVersion = mapper.readValue(textWithAnswer, DataSetsVersion.class);
+        } catch (IOException e) {
+            throw new ErrorApiVersionCheck(e.getMessage());
+        }
+        return dataSetsVersion;
     }
 }

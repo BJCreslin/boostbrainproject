@@ -1,6 +1,7 @@
 package ru.bjcreslin.service;
 
 import ru.bjcreslin.domain.jsonobjects.APIVersion;
+import ru.bjcreslin.domain.jsonobjects.DataSetsVersion;
 import ru.bjcreslin.domain.jsonobjects.JSONWrapperObject;
 import ru.bjcreslin.exceptions.ErrorApiVersionCheck;
 import ru.bjcreslin.exceptions.ErrorConectionToMosRuServer;
@@ -42,7 +43,13 @@ public interface WebService {
 
     /**
      * ерсия api
+     *
      * @return api
      */
     APIVersion getVersionApi() throws ErrorConectionToMosRuServer, ErrorApiVersionCheck;
+
+    /**
+     * Версия набора данных
+     */
+    DataSetsVersion getDataSetsVersion() throws ErrorApiVersionCheck, ErrorConectionToMosRuServer;
 }

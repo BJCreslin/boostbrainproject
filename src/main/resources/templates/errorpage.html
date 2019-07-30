@@ -10,7 +10,9 @@
 </head>
 <body>
 <div th:insert="~{header :: main}"></div>
-
+<h2>Ошибка:
+    <ztext th:text="${errorText}"></ztext>
+</h2>
 
 <div th:insert="~{footer :: main}"></div>
 </body>

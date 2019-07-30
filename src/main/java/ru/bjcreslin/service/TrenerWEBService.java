@@ -5,6 +5,7 @@ import lombok.extern.java.Log;
 import org.springframework.stereotype.Service;
 import ru.bjcreslin.domain.jsonobjects.APIVersion;
 import ru.bjcreslin.domain.apiobjects.MosRuDataServer;
+import ru.bjcreslin.domain.jsonobjects.DataSetsVersion;
 import ru.bjcreslin.domain.jsonobjects.JSONWrapperObject;
 import ru.bjcreslin.exceptions.ErrorApiVersionCheck;
 import ru.bjcreslin.exceptions.ErrorConectionToMosRuServer;
@@ -59,6 +60,11 @@ public class TrenerWEBService implements WebService {
     @Override
     public APIVersion getVersionApi() throws ErrorConectionToMosRuServer, ErrorApiVersionCheck {
         return dataServer.getApiversion();
+    }
+
+    @Override
+    public DataSetsVersion getDataSetsVersion() throws ErrorApiVersionCheck, ErrorConectionToMosRuServer {
+        return dataServer.getDataSetsVersion(Integer.parseInt(ID_DATA_GROUPE));
     }
 
     @Override

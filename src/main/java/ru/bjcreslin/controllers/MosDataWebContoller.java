@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.bjcreslin.domain.jsonobjects.APIVersion;
+import ru.bjcreslin.domain.jsonobjects.DataSetsVersion;
 import ru.bjcreslin.exceptions.ErrorApiVersionCheck;
 import ru.bjcreslin.exceptions.ErrorConectionToMosRuServer;
 import ru.bjcreslin.service.TrenerWEBService;
@@ -22,9 +23,10 @@ public class MosDataWebContoller {
 
     @GetMapping("/versionAPI")
     public String getApiVersion(Model model) {
-        APIVersion version=null;
         try {
-            version = trenerWEBService.getVersionApi();
+            APIVersion version = trenerWEBService.getVersionApi();
+            String txtOUT = "Текущая версия API:" + version.getVersion();
+            model.addAttribute("textAPI", txtOUT);
         } catch (ErrorConectionToMosRuServer errorConectionToMosRuServer) {
             model.addAttribute("errorText", "шибка соединения с сервером МОСДАТА");
             return "errorpage";
@@ -32,7 +34,26 @@ public class MosDataWebContoller {
             model.addAttribute("errorText", "шибка получения версии API");
             return "errorpage";
         }
-        model.addAttribute("textAPI", version.getVersion());
+
         return "versionapi";
+    }
+
+    @GetMapping("/versionDatasets")
+    public String getVersionDatasets(Model model) {
+        try {
+            DataSetsVersion version = trenerWEBService.getDataSetsVersion();
+            String txtOUT = "Текущая версия абора данных:" + version.getVersionNumber() +
+                    ". Текущий релиз: " + version.getReleaseNumber();
+            model.addAttribute("textAPI", txtOUT);
+        } catch (ErrorConectionToMosRuServer errorConectionToMosRuServer) {
+            model.addAttribute("errorText", "шибка соединения с сервером МОСДАТА");
+            return "errorpage";
+        } catch (ErrorApiVersionCheck errorApiVersionCheck) {
+            model.addAttribute("errorText", "шибка получения версии.");
+            return "errorpage";
+        }
+
+        return "versionapi";
+
     }
 }
