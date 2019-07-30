@@ -7,6 +7,7 @@
     <groupId>ru.bjcreslin</groupId>
     <artifactId>boostbrainproject</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <packaging>war</packaging>
     <build>
         <plugins>
             <plugin>
@@ -69,6 +70,16 @@
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
             <version>2.9.9</version>
+        </dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.2.5</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <version>2.1.6.RELEASE</version>
         </dependency>
 
 
