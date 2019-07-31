@@ -3,7 +3,9 @@ package ru.bjcreslin.domain.jsonobjects;
 import com.fasterxml.jackson.annotation.JsonAlias;
 import lombok.Data;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.ArrayList;
 
 @Data
@@ -38,7 +40,7 @@ public class JSONTrenerObject {
     @JsonAlias("OtherAchievements")
     private String otherAchievements = null;
     @JsonAlias("Sport")
-    ArrayList<Object> sport = new ArrayList<>();
+    ArrayList<Sport> sport = new ArrayList<>();
     @JsonAlias("Education")
     ArrayList<Object> education = new ArrayList<>();
     @JsonAlias("AdditionalEducation")

@@ -1,11 +1,14 @@
 package ru.bjcreslin.domain;
 
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ru.bjcreslin.domain.jsonobjects.Sport;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Entity
 @Table(name = "treners")
@@ -29,7 +32,7 @@ public class Trener {
 
     ArrayList<String> academicDegree = new ArrayList<>();
 
-    ArrayList<String> sport = new ArrayList<>();
+    List<Sport> sport = new ArrayList<>();
 
     ArrayList<String> education = new ArrayList<>();
 

@@ -19,7 +19,7 @@ public class objectConversionService {
         trener.setMiddleName(jsonTrenerObject.getMiddleName());
         trener.setGender(jsonTrenerObject.getGender());
         jsonTrenerObject.getAcademicDegree().forEach(x -> trener.getAcademicDegree().add((String) x));
-        jsonTrenerObject.getSport().forEach(x -> trener.getSport().add((String)x));
+        jsonTrenerObject.getSport().forEach(x -> trener.getSport().add(x));
         jsonTrenerObject.getEducation().forEach(x -> trener.getEducation().add((String)x));
         return trener;
     }
