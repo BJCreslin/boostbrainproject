@@ -48,9 +48,9 @@ public class TrenerWEBService implements WebService {
         ObjectMapper mapper = new ObjectMapper();
         try {
             resultList = Arrays.asList(mapper.readValue(txt, JSONWrapperObject[].class));
-            System.out.println(resultList.size());
         } catch (IOException e) {
             log.severe("не удалось распарсить данные в textToArrayOfJsonConverter");
+            log.severe(e.getMessage());
             throw new ErrorParsingTxtJsonToPojo(e.getMessage());
         }
         log.info("количество полученных данных " + resultList.size());
@@ -82,7 +82,7 @@ public class TrenerWEBService implements WebService {
                 txt.append(dataServer.getPageFromUrl(urlForReceice));
             }
         } else {
-            urlForReceice = dataServer.generatedAdress(ID_DATA_GROUPE + "/rows" + "?$top=" + 1);
+            urlForReceice = dataServer.generatedAdress(ID_DATA_GROUPE + "/rows");
             txt.append(dataServer.getPageFromUrl(urlForReceice));
         }
         log.info("url:" + urlForReceice + " получены:" + txt.length() + " символов");

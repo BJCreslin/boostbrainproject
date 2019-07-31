@@ -3,10 +3,15 @@ package ru.bjcreslin.domain.jsonobjects;
 import com.fasterxml.jackson.annotation.JsonAlias;
 import lombok.Data;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 
 @Data
+@Entity
+@Table(name = "trenerTable")
 public class JSONTrenerObject {
+    @Id
+    @JsonAlias("Global_id")
     private float global_id;
     @JsonAlias("CoachCommentScore")
     private String coachCommentScore = null;
@@ -23,29 +28,29 @@ public class JSONTrenerObject {
     @JsonAlias("Photo")
     private String photo = null;
     @JsonAlias("Citizenship")
-    ArrayList<Object> citizenship = new ArrayList<Object>();
+    ArrayList<Object> citizenship = new ArrayList<>();
     @JsonAlias("PublicPhone")
-    ArrayList<Object> publicPhone = new ArrayList<Object>();
+    ArrayList<Object> publicPhone = new ArrayList<>();
     @JsonAlias("Email")
-    ArrayList<Object> email = new ArrayList<Object>();
+    ArrayList<Object> email = new ArrayList<>();
     @JsonAlias("AcademicDegree")
-    ArrayList<Object> academicDegree = new ArrayList<Object>();
+    ArrayList<Object> academicDegree = new ArrayList<>();
     @JsonAlias("OtherAchievements")
     private String otherAchievements = null;
     @JsonAlias("Sport")
-    ArrayList<Object> sport = new ArrayList<Object>();
+    ArrayList<Object> sport = new ArrayList<>();
     @JsonAlias("Education")
-    ArrayList<Object> education = new ArrayList<Object>();
+    ArrayList<Object> education = new ArrayList<>();
     @JsonAlias("AdditionalEducation")
-    ArrayList<Object> additionalEducation = new ArrayList<Object>();
+    ArrayList<Object> additionalEducation = new ArrayList<>();
     @JsonAlias("Attestation")
-    ArrayList<Object> attestation = new ArrayList<Object>();
+    ArrayList<Object> attestation = new ArrayList<>();
     @JsonAlias("JobOrganisation")
-    ArrayList<Object> jobOrganisation = new ArrayList<Object>();
+    ArrayList<Object> jobOrganisation = new ArrayList<>();
     @JsonAlias("CoachCategory")
-    ArrayList<Object> coachCategory = new ArrayList<Object>();
+    ArrayList<Object> coachCategory = new ArrayList<>();
     @JsonAlias("SportSpecialization")
-    ArrayList<Object> sportSpecialization = new ArrayList<Object>();
+    ArrayList<Object> sportSpecialization = new ArrayList<>();
     @JsonAlias("SportActivityGender")
     private String sportActivityGender;
     @JsonAlias("SportActivityMinAge")
@@ -53,15 +58,15 @@ public class JSONTrenerObject {
     @JsonAlias("SportActivityMaxAge")
     private String sportActivityMaxAge = null;
     @JsonAlias("Services")
-    ArrayList<Object> services = new ArrayList<Object>();
+    ArrayList<Object> services = new ArrayList<>();
     @JsonAlias("PersonalAchievement")
     private String personalAchievement = null;
     @JsonAlias("Rank")
-    ArrayList<Object> rank = new ArrayList<Object>();
+    ArrayList<Object> rank = new ArrayList<>();
     @JsonAlias("PupilAchievements")
     private String pupilAchievements = null;
     @JsonAlias("FederationMembership")
-    ArrayList<Object> federationMembership = new ArrayList<Object>();
+    ArrayList<Object> federationMembership = new ArrayList<>();
     @JsonAlias("CoachRankPosition")
     private String coachRankPosition = null;
     @JsonAlias("CoachRankTotal")

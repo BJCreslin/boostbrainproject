@@ -1,6 +1,5 @@
 package ru.bjcreslin.domain;
 
-import lombok.Data;
 import lombok.Getter;
 
 import javax.persistence.Column;

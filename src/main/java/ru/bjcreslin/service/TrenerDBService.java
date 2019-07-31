@@ -1,13 +1,13 @@
 package ru.bjcreslin.service;
 
 import lombok.extern.java.Log;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ru.bjcreslin.domain.Trener;
 import ru.bjcreslin.domain.jsonobjects.JSONWrapperObject;
 import ru.bjcreslin.repository.TrenerRepository;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @Log
@@ -19,14 +19,19 @@ public class TrenerDBService {
     }
 
     /**
-     * todo:Доделать
-     * @param wrapperObjectList
+     * Сохраняет данные в базу
+     *
+     * @param wrapperObjectList List с данными mosdata
      */
     public void saveTrenersToBase(List<JSONWrapperObject> wrapperObjectList) {
-
-        List<Trener> trenerList = wrapperObjectList.stream().map((x) ->
-                Trener.builder().name(x.getCells().getName()).firstName(x.getCells().getLastName()).build()).collect(Collectors.toList());
+        List<Trener> trenerList = objectConversionService.listJSONWrapperToTrenerList(wrapperObjectList);
         trenerRepository.saveAll(trenerList);
 
     }
+
+    public List<Trener> findAll(Pageable pageable) {
+        return trenerRepository.findAll(pageable).getContent();
+    }
+
+
 }

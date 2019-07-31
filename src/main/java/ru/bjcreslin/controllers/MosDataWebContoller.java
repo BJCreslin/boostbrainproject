@@ -1,26 +1,49 @@
 package ru.bjcreslin.controllers;
 
 import lombok.extern.java.Log;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.bjcreslin.domain.jsonobjects.APIVersion;
 import ru.bjcreslin.domain.jsonobjects.DataSetsVersion;
+import ru.bjcreslin.domain.jsonobjects.JSONWrapperObject;
 import ru.bjcreslin.exceptions.ErrorApiVersionCheck;
 import ru.bjcreslin.exceptions.ErrorConectionToMosRuServer;
 import ru.bjcreslin.exceptions.ErrorParsingTxtJsonToPojo;
+import ru.bjcreslin.repository.JSONTrenerRepository;
+import ru.bjcreslin.service.TrenerDBService;
 import ru.bjcreslin.service.TrenerWEBService;
+
+import java.util.List;
 
 @RequestMapping("mosdata")
 @Controller
 @Log
 public class MosDataWebContoller {
+    private static final int maxElementsOnScreen = 20;
     private TrenerWEBService trenerWEBService;
+    private TrenerDBService trenerDBService;
 
-    public MosDataWebContoller(TrenerWEBService trenerWEBService) {
+    private JSONTrenerRepository jsonTrenerRepository;
+
+    public MosDataWebContoller(TrenerWEBService trenerWEBService, TrenerDBService trenerDBService, JSONTrenerRepository jsonTrenerRepository) {
         this.trenerWEBService = trenerWEBService;
+        this.trenerDBService = trenerDBService;
+        this.jsonTrenerRepository = jsonTrenerRepository;
+        this.pageable = PageRequest.of(0, maxElementsOnScreen);
     }
+
+//    public MosDataWebContoller(TrenerWEBService trenerWEBService, TrenerDBService trenerDBService) {
+//        this.trenerWEBService = trenerWEBService;
+//        this.trenerDBService = trenerDBService;
+//
+//        this.pageable = PageRequest.of(0, maxElementsOnScreen);
+//    }
+
+    private Pageable pageable;
 
     @GetMapping("/versionAPI")
     public String getApiVersion(Model model) {
@@ -69,10 +92,13 @@ public class MosDataWebContoller {
     }
 
 
+
     @GetMapping("loaddata")
     public String getData(Model model) {
         try {
-            trenerWEBService.getAll();
+            List<JSONWrapperObject> list = trenerWEBService.getAll();
+            trenerDBService.saveTrenersToBase(list);
+
         } catch (ErrorParsingTxtJsonToPojo errorParsingTxtJsonToPojo) {
             model.addAttribute("errorText", "Ошибка получения данных с сервера МОСДАТА");
             return "errorpage";
@@ -80,5 +106,8 @@ public class MosDataWebContoller {
             model.addAttribute("errorText", "Ошибка соединения с сервером МОСДАТА");
             return "errorpage";
         }
+        model.addAttribute("item_name", "mosdata");
+        model.addAttribute("itemsSP", trenerDBService.findAll(pageable));
+        return "showAll";
     }
 }
