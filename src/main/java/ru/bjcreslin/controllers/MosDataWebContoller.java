@@ -14,9 +14,12 @@ import ru.bjcreslin.exceptions.ErrorApiVersionCheck;
 import ru.bjcreslin.exceptions.ErrorConectionToMosRuServer;
 import ru.bjcreslin.exceptions.ErrorParsingTxtJsonToPojo;
 import ru.bjcreslin.repository.JSONTrenerRepository;
+import ru.bjcreslin.service.FileService;
+import ru.bjcreslin.service.ObjectConversionService;
 import ru.bjcreslin.service.TrenerDBService;
 import ru.bjcreslin.service.TrenerWEBService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RequestMapping("mosdata")
@@ -26,18 +29,24 @@ public class MosDataWebContoller {
     private static final int maxElementsOnScreen = 20;
     private TrenerWEBService trenerWEBService;
     private TrenerDBService trenerDBService;
-
+    private FileService fileService;
+    private ObjectConversionService objectConversionService;
     private JSONTrenerRepository jsonTrenerRepository;
 
-    public MosDataWebContoller(TrenerWEBService trenerWEBService, TrenerDBService trenerDBService, JSONTrenerRepository jsonTrenerRepository) {
+    public MosDataWebContoller(TrenerWEBService trenerWEBService, TrenerDBService trenerDBService, JSONTrenerRepository jsonTrenerRepository,
+                               FileService fileService, ObjectConversionService objectConversionService) {
         this.trenerWEBService = trenerWEBService;
         this.trenerDBService = trenerDBService;
         this.jsonTrenerRepository = jsonTrenerRepository;
         this.pageable = PageRequest.of(0, maxElementsOnScreen);
+        this.trenerWEBServiceAll = new ArrayList<>();
+        this.fileService = fileService;
+        this.objectConversionService = objectConversionService;
     }
 
 
     private Pageable pageable;
+    List<JSONWrapperObject> trenerWEBServiceAll;
 
     @GetMapping("/versionAPI")
     public String getApiVersion(Model model) {
@@ -86,12 +95,11 @@ public class MosDataWebContoller {
     }
 
 
-
     @GetMapping("loaddata")
     public String getData(Model model) {
         try {
-            List<JSONWrapperObject> list = trenerWEBService.getAll();
-            trenerDBService.saveTrenersToBase(list);
+            trenerWEBServiceAll = trenerWEBService.getAll();
+            trenerDBService.saveTrenersToBase(trenerWEBServiceAll);
 
         } catch (ErrorParsingTxtJsonToPojo errorParsingTxtJsonToPojo) {
             model.addAttribute("errorText", "Ошибка получения данных с сервера МОСДАТА");
@@ -102,6 +110,12 @@ public class MosDataWebContoller {
         }
         model.addAttribute("item_name", "mosdata");
         model.addAttribute("itemsSP", trenerDBService.findAll(pageable));
+        return "showAll";
+    }
+
+    @GetMapping("savedatatofile")
+    public String savetofile(Model model) {
+        fileService.saveBaseFile(objectConversionService.listJSonWrapperToTxt(trenerWEBServiceAll));
         return "showAll";
     }
 }
