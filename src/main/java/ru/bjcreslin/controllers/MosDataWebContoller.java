@@ -36,12 +36,6 @@ public class MosDataWebContoller {
         this.pageable = PageRequest.of(0, maxElementsOnScreen);
     }
 
-//    public MosDataWebContoller(TrenerWEBService trenerWEBService, TrenerDBService trenerDBService) {
-//        this.trenerWEBService = trenerWEBService;
-//        this.trenerDBService = trenerDBService;
-//
-//        this.pageable = PageRequest.of(0, maxElementsOnScreen);
-//    }
 
     private Pageable pageable;
 
