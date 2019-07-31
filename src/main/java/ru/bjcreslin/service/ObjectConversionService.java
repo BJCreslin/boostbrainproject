@@ -1,8 +1,10 @@
 package ru.bjcreslin.service;
 
+import org.springframework.stereotype.Service;
 import ru.bjcreslin.domain.Trener;
 import ru.bjcreslin.domain.jsonobjects.JSONTrenerObject;
 import ru.bjcreslin.domain.jsonobjects.JSONWrapperObject;
+import ru.bjcreslin.repository.SportRepository;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -10,9 +12,11 @@ import java.util.stream.Collectors;
 /**
  * Класс для методов преобразования объектов
  */
-public class objectConversionService {
+@Service
+public class ObjectConversionService {
 
-    public static Trener jSONTrenerObjectToTrener(JSONTrenerObject jsonTrenerObject) {
+    public  Trener jSONTrenerObjectToTrener(JSONTrenerObject jsonTrenerObject) {
+
         Trener trener = new Trener();
         trener.setName(jsonTrenerObject.getName());
         trener.setLastName(jsonTrenerObject.getLastName());
@@ -28,7 +32,7 @@ public class objectConversionService {
         return jsonWrapperObject.getCells();
     }
 
-    public static List<Trener> listJSONWrapperToTrenerList(List<JSONWrapperObject> wrapperObjectList) {
+    public  List<Trener> listJSONWrapperToTrenerList(List<JSONWrapperObject> wrapperObjectList) {
         List<Trener> trenerList =
                 wrapperObjectList.stream().map(x -> wrapperToTrener(x)).map(x -> jSONTrenerObjectToTrener(x)).collect(Collectors.toList());
         return trenerList;

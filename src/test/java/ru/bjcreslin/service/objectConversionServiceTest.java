@@ -13,6 +13,7 @@ import java.util.List;
 
 class objectConversionServiceTest {
     private List<JSONWrapperObject> jsonWrapperObjectList;
+    private ObjectConversionService objectConversionService;
 
     @BeforeEach
     void setUp() throws ErrorParsingTxtJsonToPojo {
@@ -97,18 +98,19 @@ class objectConversionServiceTest {
         MosRuDataServer mosRuDataServer = new MosRuDataServer();
         TrenerWEBService trenerWEBService = new TrenerWEBService(mosRuDataServer);
         jsonWrapperObjectList = trenerWEBService.textToArrayOfJsonConverter(txt1);
+        objectConversionService=new ObjectConversionService();
     }
 
     @Test
     void jSONTrenerObjectToTrener() {
-        JSONTrenerObject jsonTrenerObject = objectConversionService.wrapperToTrener(jsonWrapperObjectList.get(0));
+        JSONTrenerObject jsonTrenerObject = ObjectConversionService.wrapperToTrener(jsonWrapperObjectList.get(0));
         Trener trener = objectConversionService.jSONTrenerObjectToTrener(jsonTrenerObject);
         Assert.assertTrue(trener.getSport().get(0).getSportName().equalsIgnoreCase("акробатический рок-н-ролл"));
     }
 
     @Test
     void wrapperToTrener() {
-        JSONTrenerObject jsonTrenerObject = objectConversionService.wrapperToTrener(jsonWrapperObjectList.get(0));
+        JSONTrenerObject jsonTrenerObject = ObjectConversionService.wrapperToTrener(jsonWrapperObjectList.get(0));
         Assert.assertTrue(jsonTrenerObject.getName().equalsIgnoreCase("Надежда"));
     }
 
