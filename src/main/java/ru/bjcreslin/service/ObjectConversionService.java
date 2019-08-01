@@ -40,7 +40,7 @@ public class ObjectConversionService {
     }
 
     public List<Trener> listJSONWrapperToTrenerList(List<JSONWrapperObject> wrapperObjectList) {
-        return new ArrayList<>(wrapperObjectList.stream().map(ObjectConversionService::wrapperToTrener).map(this::jSONTrenerObjectToTrener).collect(Collectors.toCollection(ArrayList::new)));
+        return wrapperObjectList.stream().map(ObjectConversionService::wrapperToTrener).map(this::jSONTrenerObjectToTrener).collect(Collectors.toList());
 
     }
 
