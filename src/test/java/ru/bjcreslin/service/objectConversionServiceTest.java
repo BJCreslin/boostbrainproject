@@ -15,6 +15,7 @@ class objectConversionServiceTest {
     private List<JSONWrapperObject> jsonWrapperObjectList;
     private ObjectConversionService objectConversionService;
 
+
     @BeforeEach
     void setUp() throws ErrorParsingTxtJsonToPojo {
         String txt1 = "[\n" +
@@ -96,8 +97,8 @@ class objectConversionServiceTest {
                 "]";
 
         MosRuDataServer mosRuDataServer = new MosRuDataServer();
-        TrenerWEBService trenerWEBService = new TrenerWEBService(mosRuDataServer);
-        jsonWrapperObjectList = trenerWEBService.textToArrayOfJsonConverter(txt1);
+
+        jsonWrapperObjectList =objectConversionService.textToArrayOfJsonConverter(txt1);
         objectConversionService=new ObjectConversionService();
     }
 

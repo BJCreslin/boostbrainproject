@@ -45,5 +45,9 @@ public class TrenerDBService {
         return trenerRepository.findAll(pageable).getContent();
     }
 
+    public List<Trener> findAll() {
+        return trenerRepository.findAll();
+    }
+
 
 }

@@ -28,41 +28,29 @@
                     <a class="dropdown-item" th:href="@{/mosdata/versionDatasets}">Версия данных сервера</a>
                     <a class="dropdown-item" th:href="@{/mosdata/number}">Количество данных в наборе</a>
                     <a class="dropdown-item" th:href="@{/mosdata/loaddata}">Загрузить данные с сервера</a>
-                    <a class="dropdown-item" th:href="@{/mosdata/savedatatofile}">Сохранить данные в кеш</a>
-
                 </div>
 
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbardrop2" data-toggle="dropdown">
-                    Stroypark section
+                    Кеширование данных
                 </a>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" th:href="@{/StroyPark/showall}">Show All</a>
-                    <a class="dropdown-item" th:href="@{/StroyPark/additem}">Add item </a>
-                    <a class="dropdown-item" th:href="@{/StroyPark/rereadall}">Reread All</a>
+                    <a class="dropdown-item" th:href="@{/file/savedata}">Сохранить данные в кеш</a>
+                    <a class="dropdown-item" th:href="@{/file/loaddata}">Загрузить данные из кеша </a>
                 </div>
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbardrop3" data-toggle="dropdown">
-                    Kit section
+                    Анализ
                 </a>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" th:href="@{/Kit/showall}">Show All</a>
+                    <a class="dropdown-item" th:href="@{/analise/sport}">Разбивка по видам спорта</a>
                     <a class="dropdown-item" th:href="@{/Kit/additem}">Add item </a>
                     <a class="dropdown-item" th:href="@{/Kit/rereadall}">Reread All </a>
                 </div>
             </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbardrop4" data-toggle="dropdown">
-                    Analise
-                </a>
-                <div class="dropdown-menu">
-                    <a class="dropdown-item" th:href="@{/analize/cheap_sp}">Cheap Stroypark</a>
-                    <a class="dropdown-item" th:href="@{/analize/cheap_kit}">Cheap Kit </a>
-                </div>
 
-            </li>
         </ul>
     </nav>
 

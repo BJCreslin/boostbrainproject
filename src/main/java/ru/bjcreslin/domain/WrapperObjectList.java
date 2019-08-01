@@ -16,12 +16,13 @@ import java.util.List;
 @Log
 public class WrapperObjectList {
     public static List<JSONWrapperObject> getObjectList() {
+        log.info("Данные взяты из кеша ХДД, всего " + getObjectList().size() + " объектов");
         return objectList;
     }
 
     public static void setObjectList(List<JSONWrapperObject> objectList) {
         WrapperObjectList.objectList = objectList;
-        log.info("Данные закешированы в память, всего " + objectList.size() + " объектов");
+        log.info("Данные закешированы на ХДД, всего " + objectList.size() + " объектов");
     }
 
     private static List<JSONWrapperObject> objectList = new ArrayList<>();

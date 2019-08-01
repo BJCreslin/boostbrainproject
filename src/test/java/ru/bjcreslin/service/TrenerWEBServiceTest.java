@@ -15,7 +15,7 @@ class TrenerWEBServiceTest {
 
     @BeforeEach
     void SetUp() {
-        webService = new TrenerWEBService(new MosRuDataServer());
+        webService = new TrenerWEBService(new MosRuDataServer(),new ObjectConversionService());
     }
 
     @Test
