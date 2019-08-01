@@ -20,6 +20,7 @@ public class Sport {
 
     @JsonAlias(value = "SeniorityPeriod")
     private String SeniorityPeriod;
-    @JsonAlias(value = "SportName")
+
+        @JsonAlias(value = "SportName")
     private String sportName;
 }

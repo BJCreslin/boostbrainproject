@@ -33,7 +33,9 @@
     <tr th:each="item : ${itemsSP}">
 <!--        <td><a th:href="@{${item.address}}"> <b th:text="${item.code}"></b> </a></td>-->
         <td th:text="${item.name}"></td>
-        <td th:text="${item.firstName}"></td>
+        <td th:text="${item.middleName}"></td>
+        <td th:text="${item.lastName}"></td>
+        <td th:text="${item.sport.get(0).sportName}"></td>
 <!--        <td th:text="${item.priceDiscount}"></td>-->
 
 <!--        <td th:text="${item.comment}"></td>-->
