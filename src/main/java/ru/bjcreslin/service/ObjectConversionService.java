@@ -10,6 +10,7 @@ import ru.bjcreslin.domain.jsonobjects.JSONWrapperObject;
 import ru.bjcreslin.exceptions.ErrorParsingTxtJsonToPojo;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -39,7 +40,8 @@ public class ObjectConversionService {
     }
 
     public List<Trener> listJSONWrapperToTrenerList(List<JSONWrapperObject> wrapperObjectList) {
-        return wrapperObjectList.stream().map(ObjectConversionService::wrapperToTrener).map(this::jSONTrenerObjectToTrener).collect(Collectors.toList());
+        return new ArrayList<>(wrapperObjectList.stream().map(ObjectConversionService::wrapperToTrener).map(this::jSONTrenerObjectToTrener).collect(Collectors.toCollection(ArrayList::new)));
+
     }
 
     public List<JSONWrapperObject> textToArrayOfJsonConverter(String txt) throws ErrorParsingTxtJsonToPojo {

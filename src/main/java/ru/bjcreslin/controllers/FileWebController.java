@@ -16,6 +16,8 @@ import ru.bjcreslin.service.TrenerDBService;
 
 import java.util.List;
 
+import static ru.bjcreslin.domain.WrapperObjectList.setObjectList;
+
 @Controller
 @Log
 @RequestMapping("file")
@@ -26,14 +28,13 @@ public class FileWebController {
     private Pageable pageable;
     private TrenerDBService trenerDBService;
 
+
     public FileWebController(FileService fileService, ObjectConversionService objectConversionService, TrenerDBService trenerDBService) {
         this.fileService = fileService;
         this.objectConversionService = objectConversionService;
         this.trenerDBService = trenerDBService;
         this.pageable = PageRequest.of(0, maxElementsOnScreen);
-
     }
-
 
     @GetMapping("/savedata")
     public String save(Model model) {
@@ -48,13 +49,15 @@ public class FileWebController {
         try {
             String txt1 = fileService.readBaseFile();
             log.info("данные получены из файла. Вего " + txt1.length() + " знаков");
-            List<JSONWrapperObject>wrapperObjects=objectConversionService.textToArrayOfJsonConverter(txt1);
-            log.info("данные переведены из JSON "+ wrapperObjects.size()+" элементов");
-            WrapperObjectList.setObjectList(wrapperObjects);
+            List<JSONWrapperObject> wrapperObjects = objectConversionService.textToArrayOfJsonConverter(txt1);
+            log.info("данные переведены из JSON " + wrapperObjects.size() + " элементов");
+            setObjectList(wrapperObjects);
+           // log.info("sizr " + WrapperObjectList.getObjectList().size());
         } catch (ErrorParsingTxtJsonToPojo errorParsingTxtJsonToPojo) {
             model.addAttribute("errorText", "Не удалось получить данные из кеша");
             return "errorpage";
         }
+        log.info("количество данных в кеше памяти " + WrapperObjectList.size());
         trenerDBService.saveTrenersToBase(WrapperObjectList.getObjectList());
         model.addAttribute("item_name", "mosdata");
         model.addAttribute("itemsSP", trenerDBService.findAll(pageable));

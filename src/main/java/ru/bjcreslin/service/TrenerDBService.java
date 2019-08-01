@@ -33,6 +33,7 @@ public class TrenerDBService {
     public void saveTrenersToBase(List<JSONWrapperObject> wrapperObjectList) {
         List<Trener> trenerList = objectConversionService.listJSONWrapperToTrenerList(wrapperObjectList);
         List<Sport> allSportList = new ArrayList<>();
+
         for (Trener trener : trenerList) {
             allSportList.addAll(trener.getSport());
         }
