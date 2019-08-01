@@ -1,18 +1,15 @@
 package ru.bjcreslin.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.java.Log;
 import org.springframework.stereotype.Service;
-import ru.bjcreslin.domain.jsonobjects.APIVersion;
 import ru.bjcreslin.domain.apiobjects.MosRuDataServer;
+import ru.bjcreslin.domain.jsonobjects.APIVersion;
 import ru.bjcreslin.domain.jsonobjects.DataSetsVersion;
 import ru.bjcreslin.domain.jsonobjects.JSONWrapperObject;
 import ru.bjcreslin.exceptions.ErrorApiVersionCheck;
 import ru.bjcreslin.exceptions.ErrorConectionToMosRuServer;
 import ru.bjcreslin.exceptions.ErrorParsingTxtJsonToPojo;
 
-import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
 
 @Log
@@ -21,9 +18,11 @@ public class TrenerWEBService implements WebService {
     private static final String ID_DATA_GROUPE = "61321"; // "Id": 61321,  - ID данных по тренерам
     private MosRuDataServer dataServer;
     private static int count = 0;
+    private ObjectConversionService objectConversionService;
 
-    public TrenerWEBService(MosRuDataServer dataServer) {
+    public TrenerWEBService(MosRuDataServer dataServer,ObjectConversionService objectConversionService) {
         this.dataServer = dataServer;
+        this.objectConversionService=objectConversionService;
     }
 
     @Override
@@ -39,23 +38,9 @@ public class TrenerWEBService implements WebService {
     @Override
     public List<JSONWrapperObject> getAll() throws ErrorParsingTxtJsonToPojo, ErrorConectionToMosRuServer {
         String txt = getTextJSONData();
-        return textToArrayOfJsonConverter(txt);
+        return objectConversionService.textToArrayOfJsonConverter(txt);
     }
 
-    @Override
-    public List<JSONWrapperObject> textToArrayOfJsonConverter(String txt) throws ErrorParsingTxtJsonToPojo {
-        List<JSONWrapperObject> resultList;
-        ObjectMapper mapper = new ObjectMapper();
-        try {
-            resultList = Arrays.asList(mapper.readValue(txt, JSONWrapperObject[].class));
-        } catch (IOException e) {
-            log.severe("не удалось распарсить данные в textToArrayOfJsonConverter");
-            log.severe(e.getMessage());
-            throw new ErrorParsingTxtJsonToPojo(e.getMessage());
-        }
-        log.info("количество полученных данных " + resultList.size());
-        return resultList;
-    }
 
     @Override
     public APIVersion getVersionApi() throws ErrorConectionToMosRuServer, ErrorApiVersionCheck {

@@ -1,12 +1,13 @@
 package ru.bjcreslin.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.java.Log;
 import org.springframework.stereotype.Service;
 import ru.bjcreslin.domain.Trener;
 import ru.bjcreslin.domain.jsonobjects.JSONTrenerObject;
 import ru.bjcreslin.domain.jsonobjects.JSONWrapperObject;
 import ru.bjcreslin.exceptions.ErrorParsingTxtJsonToPojo;
-import ru.bjcreslin.repository.SportRepository;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -16,10 +17,11 @@ import java.util.stream.Collectors;
 /**
  * Класс для методов преобразования объектов
  */
+@Log
 @Service
 public class ObjectConversionService {
 
-    public  Trener jSONTrenerObjectToTrener(JSONTrenerObject jsonTrenerObject) {
+    public Trener jSONTrenerObjectToTrener(JSONTrenerObject jsonTrenerObject) {
 
         Trener trener = new Trener();
         trener.setName(jsonTrenerObject.getName());
@@ -28,18 +30,16 @@ public class ObjectConversionService {
         trener.setGender(jsonTrenerObject.getGender());
         jsonTrenerObject.getAcademicDegree().forEach(x -> trener.getAcademicDegree().add((String) x));
         jsonTrenerObject.getSport().forEach(x -> trener.getSport().add(x));
-        jsonTrenerObject.getEducation().forEach(x -> trener.getEducation().add((String)x));
+        jsonTrenerObject.getEducation().forEach(x -> trener.getEducation().add((String) x));
         return trener;
     }
 
-    public static JSONTrenerObject wrapperToTrener(JSONWrapperObject jsonWrapperObject) {
+    static JSONTrenerObject wrapperToTrener(JSONWrapperObject jsonWrapperObject) {
         return jsonWrapperObject.getCells();
     }
 
-    public  List<Trener> listJSONWrapperToTrenerList(List<JSONWrapperObject> wrapperObjectList) {
-        List<Trener> trenerList =
-                wrapperObjectList.stream().map(x -> wrapperToTrener(x)).map(x -> jSONTrenerObjectToTrener(x)).collect(Collectors.toList());
-        return trenerList;
+    public List<Trener> listJSONWrapperToTrenerList(List<JSONWrapperObject> wrapperObjectList) {
+        return wrapperObjectList.stream().map(ObjectConversionService::wrapperToTrener).map(this::jSONTrenerObjectToTrener).collect(Collectors.toList());
     }
 
     public List<JSONWrapperObject> textToArrayOfJsonConverter(String txt) throws ErrorParsingTxtJsonToPojo {
@@ -56,4 +56,12 @@ public class ObjectConversionService {
         return resultList;
     }
 
+    public String wrapperObjectListToString(List<JSONWrapperObject> objectList) {
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            return mapper.writeValueAsString(objectList);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+    }
 }

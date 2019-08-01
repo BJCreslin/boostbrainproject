@@ -1,13 +1,8 @@
 package ru.bjcreslin.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
-import ru.bjcreslin.domain.jsonobjects.JSONWrapperObject;
-import ru.bjcreslin.exceptions.ErrorParsingTxtJsonToPojo;
 
 import java.io.*;
-import java.util.Arrays;
-import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
@@ -18,7 +13,7 @@ public class FileService {
     private static final String filename = "rows.zip";
 
     public String readBaseFile() {
-        return zipToTXT(filename);
+        return zipToTXT();
     }
 
     public void saveBaseFile(String txt) {
@@ -35,9 +30,9 @@ public class FileService {
         }
     }
 
-    private String zipToTXT(String filename) {
+    private String zipToTXT() {
         StringBuilder textOut = new StringBuilder();
-        try (ZipInputStream zin = new ZipInputStream(new FileInputStream(filename));
+        try (ZipInputStream zin = new ZipInputStream(new FileInputStream(FileService.filename));
              BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(zin))) {
             zin.getNextEntry();
             bufferedReader.lines().forEach(textOut::append);

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import ru.bjcreslin.domain.WrapperObjectList;
 import ru.bjcreslin.domain.jsonobjects.APIVersion;
 import ru.bjcreslin.domain.jsonobjects.DataSetsVersion;
 import ru.bjcreslin.domain.jsonobjects.JSONWrapperObject;
@@ -27,15 +28,11 @@ public class MosDataWebContoller {
     private TrenerWEBService trenerWEBService;
     private TrenerDBService trenerDBService;
 
-    private JSONTrenerRepository jsonTrenerRepository;
-
     public MosDataWebContoller(TrenerWEBService trenerWEBService, TrenerDBService trenerDBService, JSONTrenerRepository jsonTrenerRepository) {
         this.trenerWEBService = trenerWEBService;
         this.trenerDBService = trenerDBService;
-        this.jsonTrenerRepository = jsonTrenerRepository;
         this.pageable = PageRequest.of(0, maxElementsOnScreen);
     }
-
 
     private Pageable pageable;
 
@@ -86,12 +83,13 @@ public class MosDataWebContoller {
     }
 
 
-
     @GetMapping("loaddata")
     public String getData(Model model) {
         try {
-            List<JSONWrapperObject> list = trenerWEBService.getAll();
-            trenerDBService.saveTrenersToBase(list);
+            //кешируем полученные с сервера Мосдата данные в память
+            WrapperObjectList.setObjectList(trenerWEBService.getAll());
+            // Преобразуем и сохраняем даныне для анализа
+            trenerDBService.saveTrenersToBase(WrapperObjectList.getObjectList());
 
         } catch (ErrorParsingTxtJsonToPojo errorParsingTxtJsonToPojo) {
             model.addAttribute("errorText", "Ошибка получения данных с сервера МОСДАТА");

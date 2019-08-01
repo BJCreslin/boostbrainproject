@@ -33,13 +33,6 @@ public interface WebService {
      */
     String getTextJSONData() throws ErrorConectionToMosRuServer;
 
-    /**
-     * преобразует тект в лист POJO
-     *
-     * @param txt
-     * @return list
-     */
-    List<JSONWrapperObject> textToArrayOfJsonConverter(String txt) throws ErrorParsingTxtJsonToPojo;
 
     /**
      * ерсия api
