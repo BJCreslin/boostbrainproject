@@ -15,5 +15,13 @@ public class JSONWrapperObject {
     @JsonAlias("Cells")
     JSONTrenerObject cells;
 
+    @Override
+    public String toString() {
+        return "JSONWrapperObject{" +
+                "number=" + number +
+                ", name=" + cells.getName() +
+                ", cells=" + cells.sport.toString() +
+                '}';
+    }
 }
 

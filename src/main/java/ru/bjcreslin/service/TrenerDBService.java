@@ -30,7 +30,7 @@ public class TrenerDBService {
      *
      * @param wrapperObjectList List с данными mosdata
      */
-    public void saveTrenersToBase(List<JSONWrapperObject> wrapperObjectList) {
+    public void saveJSONWrapperObjectListToTrenersDBase(List<JSONWrapperObject> wrapperObjectList) {
         List<Trener> trenerList = objectConversionService.listJSONWrapperToTrenerList(wrapperObjectList);
         List<Sport> allSportList = new ArrayList<>();
 
@@ -41,6 +41,7 @@ public class TrenerDBService {
         trenerRepository.saveAll(trenerList);
 
     }
+
 
     public List<Trener> findAll(Pageable pageable) {
         return trenerRepository.findAll(pageable).getContent();

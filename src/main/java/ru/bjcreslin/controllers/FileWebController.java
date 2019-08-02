@@ -39,28 +39,55 @@ public class FileWebController {
     @GetMapping("/savedata")
     public String save(Model model) {
         fileService.saveBaseFile(objectConversionService.wrapperObjectListToString(WrapperObjectList.getObjectList()));
-        model.addAttribute("item_name", "mosdata");
+        model.addAttribute("item_name", "file");
         model.addAttribute("itemsSP", trenerDBService.findAll(pageable));
         return "showAll";
     }
 
     @GetMapping("/loaddata")
     public String load(Model model) {
+
         try {
             String txt1 = fileService.readBaseFile();
             log.info("данные получены из файла. Вего " + txt1.length() + " знаков");
             List<JSONWrapperObject> wrapperObjects = objectConversionService.textToArrayOfJsonConverter(txt1);
             log.info("данные переведены из JSON " + wrapperObjects.size() + " элементов");
             setObjectList(wrapperObjects);
-           // log.info("sizr " + WrapperObjectList.getObjectList().size());
+
+            log.info("количество данных в кеше памяти " + WrapperObjectList.size());
+            trenerDBService.saveJSONWrapperObjectListToTrenersDBase(wrapperObjects);
+
         } catch (ErrorParsingTxtJsonToPojo errorParsingTxtJsonToPojo) {
             model.addAttribute("errorText", "Не удалось получить данные из кеша");
             return "errorpage";
         }
-        log.info("количество данных в кеше памяти " + WrapperObjectList.size());
-        trenerDBService.saveTrenersToBase(WrapperObjectList.getObjectList());
-        model.addAttribute("item_name", "mosdata");
+
+        model.addAttribute("item_name", "file");
         model.addAttribute("itemsSP", trenerDBService.findAll(pageable));
+        return "showAll";
+    }
+
+    @GetMapping("/first")
+    public String showFirst(Model model) {
+        pageable = pageable.first();
+        model.addAttribute("itemsSP", trenerDBService.findAll(pageable));
+        model.addAttribute("item_name", "mosdata");
+        return "showAll";
+    }
+
+    @GetMapping("/prev")
+    public String showPrev(Model model) {
+        pageable = pageable.previousOrFirst();
+        model.addAttribute("itemsSP", trenerDBService.findAll(pageable));
+        model.addAttribute("item_name", "file");
+        return "showAll";
+    }
+
+    @GetMapping("/next")
+    public String showNext(Model model) {
+        pageable = pageable.next();
+        model.addAttribute("itemsSP", trenerDBService.findAll(pageable));
+        model.addAttribute("item_name", "file");
         return "showAll";
     }
 }

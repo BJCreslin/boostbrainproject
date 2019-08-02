@@ -7,7 +7,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import ru.bjcreslin.domain.jsonobjects.JSONWrapperObject;
 import ru.bjcreslin.exceptions.ErrorParsingTxtJsonToPojo;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -108,7 +107,7 @@ class TrenerDBServiceTest {
     @Test
     void saveTrenersToBase() {
         System.out.println(wrapperObjectList.size());
-        trenerDBService.saveTrenersToBase(wrapperObjectList);
+        trenerDBService.saveJSONWrapperObjectListToTrenersDBase(wrapperObjectList);
         assertEquals(trenerDBService.findAll().size(), wrapperObjectList.size());
     }
 }

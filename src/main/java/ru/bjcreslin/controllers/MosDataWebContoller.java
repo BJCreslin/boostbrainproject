@@ -88,8 +88,11 @@ public class MosDataWebContoller {
         try {
             //кешируем полученные с сервера Мосдата данные в память
             WrapperObjectList.setObjectList(trenerWEBService.getAll());
+            log.info("данные сервера закешированы в память. всего " + WrapperObjectList.getObjectList().size());
             // Преобразуем и сохраняем даныне для анализа
-            trenerDBService.saveTrenersToBase(WrapperObjectList.getObjectList());
+            List<JSONWrapperObject> jsonWrapperObjectList=WrapperObjectList.getObjectList();
+            log.info("  List<JSONWrapperObject> jsonWrapperObjectList=WrapperObjectList.getObjectList();");
+            trenerDBService.saveJSONWrapperObjectListToTrenersDBase(jsonWrapperObjectList);
 
         } catch (ErrorParsingTxtJsonToPojo errorParsingTxtJsonToPojo) {
             model.addAttribute("errorText", "Ошибка получения данных с сервера МОСДАТА");
@@ -98,8 +101,32 @@ public class MosDataWebContoller {
             model.addAttribute("errorText", "Ошибка соединения с сервером МОСДАТА");
             return "errorpage";
         }
-        model.addAttribute("item_name", "mosdata");
+        model.addAttribute("item_name", "mosdatav");
         model.addAttribute("itemsSP", trenerDBService.findAll(pageable));
+        return "showAll";
+    }
+
+    @GetMapping("/first")
+    public String showFirst(Model model) {
+        pageable = pageable.first();
+        model.addAttribute("itemsSP", trenerDBService.findAll(pageable));
+        model.addAttribute("item_name", "mosdata");
+        return "showAll";
+    }
+
+    @GetMapping("/prev")
+    public String showPrev(Model model) {
+        pageable = pageable.previousOrFirst();
+        model.addAttribute("itemsSP", trenerDBService.findAll(pageable));
+        model.addAttribute("item_name", "mosdata");
+        return "showAll";
+    }
+
+    @GetMapping("/next")
+    public String showNext(Model model) {
+        pageable = pageable.next();
+        model.addAttribute("itemsSP", trenerDBService.findAll(pageable));
+        model.addAttribute("item_name", "mosdata");
         return "showAll";
     }
 }

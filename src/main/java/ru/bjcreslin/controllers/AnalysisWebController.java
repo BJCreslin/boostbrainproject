@@ -15,9 +15,13 @@ import java.util.TreeMap;
 
 @Controller
 @Log
-@RequestMapping("analysis")
+@RequestMapping("analise")
 public class AnalysisWebController {
     private TrenerDBService trenerDBService;
+
+    public AnalysisWebController(TrenerDBService trenerDBService) {
+        this.trenerDBService = trenerDBService;
+    }
 
     @GetMapping("/sport")
     public String getSportbyTrenersNumber(Model model) {
@@ -25,7 +29,8 @@ public class AnalysisWebController {
         for (Trener trener : trenerDBService.findAll()) {
             for (Sport sport : trener.getSport()) {
                 if (sportsCount.containsKey(sport.getSportName())) {
-                    sportsCount.replace(sport.getSportName(), sportsCount.get(sport.getSportName()));
+                    int count = sportsCount.get(sport.getSportName());
+                    sportsCount.put(sport.getSportName(), count + 1);
                 } else {
                     sportsCount.put(sport.getSportName(), 1);
                 }

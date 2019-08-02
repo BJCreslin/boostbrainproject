@@ -21,6 +21,13 @@ public class Sport {
     @JsonAlias(value = "SeniorityPeriod")
     private String SeniorityPeriod;
 
-        @JsonAlias(value = "SportName")
+    @Override
+    public String toString() {
+        return "Sport{" +
+                "sportName='" + sportName + '\'' +
+                '}';
+    }
+
+    @JsonAlias(value = "SportName")
     private String sportName;
 }

@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.com">
 <head>
     <meta charset="UTF-8">
-    <title>Main page</title>
+    <title>Данные</title>
     <link rel="stylesheet" type="text/css"
           href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}"/>
     <link rel="stylesheet" type="text/css"
@@ -19,30 +19,18 @@
 <table class="table .table-striped .table-bordered .table-responsive">
     <thead class="thead-dark">
     <tr>
-        <th class="priceInTable">Code</th>
-        <th class="nameInTable">Name</th>
-        <th class="priceInTable">Price</th>
-        <th class="priceInTable">Discount</th>
-        <th class="nameInTable">Comment</th>
-        <th class="nameInTable">Waterman</th>
-        <th class="priceInTable">Edit</th>
-        <th class="">Delete</th>
+        <th class="nameInTable">Имя</th>
+        <th class="nameInTable">Отчество</th>
+        <th class="nameInTable">Фамилия</th>
+        <th class="nameInTable">Вид спорта</th>
     </tr>
 
     </thead>
     <tr th:each="item : ${itemsSP}">
-<!--        <td><a th:href="@{${item.address}}"> <b th:text="${item.code}"></b> </a></td>-->
         <td th:text="${item.name}"></td>
         <td th:text="${item.middleName}"></td>
         <td th:text="${item.lastName}"></td>
-        <td th:text="${item.sport.get(0).sportName}"></td>
-<!--        <td th:text="${item.priceDiscount}"></td>-->
-
-<!--        <td th:text="${item.comment}"></td>-->
-<!--        <td th:text="${item.watermanItemDTO.name}"></td>-->
-        <td><a href="edit_item.html" th:href="@{'/'+${item_name}+'/edit/'+${item.id}}">Edit</a></td>
-        <td><a th:href="@{'/'+${item_name}+'/delete/'+${item.id}}">Delete</a></td>
-
+        <td th:text="${item.sport}"></td>
     </tr>
 
 </table>
