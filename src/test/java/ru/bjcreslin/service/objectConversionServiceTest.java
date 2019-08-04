@@ -3,16 +3,18 @@ package ru.bjcreslin.service;
 import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
 import ru.bjcreslin.domain.Trener;
-import ru.bjcreslin.domain.apiobjects.MosRuDataServer;
 import ru.bjcreslin.domain.jsonobjects.JSONTrenerObject;
 import ru.bjcreslin.domain.jsonobjects.JSONWrapperObject;
 import ru.bjcreslin.exceptions.ErrorParsingTxtJsonToPojo;
 
+import java.util.ArrayList;
 import java.util.List;
 
+@SpringBootTest
 class objectConversionServiceTest {
-    private List<JSONWrapperObject> jsonWrapperObjectList;
+    private List<JSONWrapperObject> jsonWrapperObjectList = new ArrayList<>();
     private ObjectConversionService objectConversionService;
 
 
@@ -96,10 +98,9 @@ class objectConversionServiceTest {
                 "    }\n" +
                 "]";
 
-        MosRuDataServer mosRuDataServer = new MosRuDataServer();
-
-        jsonWrapperObjectList =objectConversionService.textToArrayOfJsonConverter(txt1);
-        objectConversionService=new ObjectConversionService();
+        objectConversionService = new ObjectConversionService();
+        jsonWrapperObjectList = objectConversionService.textToArrayOfJsonConverter(txt1);
+        objectConversionService = new ObjectConversionService();
     }
 
     @Test

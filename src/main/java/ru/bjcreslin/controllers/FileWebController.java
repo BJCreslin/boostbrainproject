@@ -53,8 +53,9 @@ public class FileWebController {
             List<JSONWrapperObject> wrapperObjects = objectConversionService.textToArrayOfJsonConverter(txt1);
             log.info("данные переведены из JSON " + wrapperObjects.size() + " элементов");
             setObjectList(wrapperObjects);
-
             log.info("количество данных в кеше памяти " + WrapperObjectList.size());
+            log.info("Очистка данных в дб");
+            trenerDBService.clearBase();
             trenerDBService.saveJSONWrapperObjectListToTrenersDBase(wrapperObjects);
 
         } catch (ErrorParsingTxtJsonToPojo errorParsingTxtJsonToPojo) {

@@ -23,6 +23,9 @@ public class AnalysisWebController {
         this.trenerDBService = trenerDBService;
     }
 
+    /**
+     * Вывод html  с данныит по спорту и количеству тренеров
+     */
     @GetMapping("/sport")
     public String getSportbyTrenersNumber(Model model) {
         Map<String, Integer> sportsCount = new HashMap<>();
@@ -36,7 +39,6 @@ public class AnalysisWebController {
                 }
             }
         }
-
         // Сортируем
         Map<Integer, String> sportsCountSort = new TreeMap<>();
         for (Map.Entry<String, Integer> entry : sportsCount.entrySet()) {

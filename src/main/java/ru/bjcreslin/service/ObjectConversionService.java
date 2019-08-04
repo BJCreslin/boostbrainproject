@@ -21,8 +21,13 @@ import java.util.stream.Collectors;
 @Service
 public class ObjectConversionService {
 
+    /**
+     * Превращает JSONTrenerObject в объект Trener
+     *
+     * @param jsonTrenerObject JSONTrenerObject объект
+     * @return Объект Trener
+     */
     Trener jSONTrenerObjectToTrener(JSONTrenerObject jsonTrenerObject) {
-
         Trener trener = new Trener();
         trener.setName(jsonTrenerObject.getName());
         trener.setLastName(jsonTrenerObject.getLastName());
@@ -34,14 +39,34 @@ public class ObjectConversionService {
         return trener;
     }
 
+    /**
+     * Превразщает JSONWrapperObject (основной объект данных мосдата) в JSONTrenerObject
+     *
+     * @param jsonWrapperObject объект
+     * @return JSONTrenerObject
+     */
     static JSONTrenerObject wrapperToTrener(JSONWrapperObject jsonWrapperObject) {
         return jsonWrapperObject.getCells();
     }
 
+    /**
+     * Делает из Лист JSONWrapperObject Лист объектов trener
+     *
+     * @param wrapperObjectList List JSONWrapperObject
+     * @return List Trener
+     */
     List<Trener> listJSONWrapperToTrenerList(List<JSONWrapperObject> wrapperObjectList) {
-        return wrapperObjectList.stream().map(ObjectConversionService::wrapperToTrener).map(this::jSONTrenerObjectToTrener).collect(Collectors.toList());
+        return wrapperObjectList.stream().map(ObjectConversionService::wrapperToTrener).map(this::jSONTrenerObjectToTrener).
+                collect(Collectors.toList());
     }
 
+    /**
+     * Метод делающий из текста с JSON данными лист объектов  JSONWrapperObject
+     *
+     * @param txt данные с сервера Мосдата
+     * @return Коллекция с данными JSONWrapperObject
+     * @throws ErrorParsingTxtJsonToPojo ошибка перобразования
+     */
     public List<JSONWrapperObject> textToArrayOfJsonConverter(String txt) throws ErrorParsingTxtJsonToPojo {
         List<JSONWrapperObject> resultList;
         ObjectMapper mapper = new ObjectMapper();
@@ -56,6 +81,12 @@ public class ObjectConversionService {
         return resultList;
     }
 
+    /**
+     * Делает из коллекции JSONWrapperObject  текст с JSON дангными
+     *
+     * @param objectList Коллекция из JSONWrapperObject
+     * @return текст с JSON данными
+     */
     public String wrapperObjectListToString(List<JSONWrapperObject> objectList) {
         ObjectMapper mapper = new ObjectMapper();
         try {

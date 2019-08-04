@@ -42,7 +42,6 @@ public class TrenerDBService {
 
     }
 
-
     public List<Trener> findAll(Pageable pageable) {
         return trenerRepository.findAll(pageable).getContent();
     }
@@ -51,5 +50,7 @@ public class TrenerDBService {
         return trenerRepository.findAll();
     }
 
-
+    public void clearBase() {
+        trenerRepository.deleteAllInBatch();
+    }
 }
