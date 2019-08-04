@@ -23,6 +23,9 @@ import java.util.List;
 @RequestMapping("mosdata")
 @Controller
 @Log
+/**
+ * ВебКонтроллер для управления получением данных с сервера МОСДАТА
+ */
 public class MosDataWebContoller {
     private static final int maxElementsOnScreen = 20;
     private TrenerWEBService trenerWEBService;
@@ -86,14 +89,12 @@ public class MosDataWebContoller {
     @GetMapping("loaddata")
     public String getData(Model model) {
         try {
+            List<JSONWrapperObject> jsonWrapperObjectList=trenerWEBService.getAll();
             //кешируем полученные с сервера Мосдата данные в память
-            WrapperObjectList.setObjectList(trenerWEBService.getAll());
-            log.info("данные сервера закешированы в память. всего " + WrapperObjectList.getObjectList().size());
-            // Преобразуем и сохраняем даныне для анализа
-            List<JSONWrapperObject> jsonWrapperObjectList=WrapperObjectList.getObjectList();
-            log.info("  List<JSONWrapperObject> jsonWrapperObjectList=WrapperObjectList.getObjectList();");
+            WrapperObjectList.setObjectList(jsonWrapperObjectList);
+            log.info("данные сервера закешированы в память. всего " + WrapperObjectList.size());
+            //Сохраняем тренеров в БД
             trenerDBService.saveJSONWrapperObjectListToTrenersDBase(jsonWrapperObjectList);
-
         } catch (ErrorParsingTxtJsonToPojo errorParsingTxtJsonToPojo) {
             model.addAttribute("errorText", "Ошибка получения данных с сервера МОСДАТА");
             return "errorpage";
@@ -101,7 +102,7 @@ public class MosDataWebContoller {
             model.addAttribute("errorText", "Ошибка соединения с сервером МОСДАТА");
             return "errorpage";
         }
-        model.addAttribute("item_name", "mosdatav");
+        model.addAttribute("item_name", "mosdata");
         model.addAttribute("itemsSP", trenerDBService.findAll(pageable));
         return "showAll";
     }
