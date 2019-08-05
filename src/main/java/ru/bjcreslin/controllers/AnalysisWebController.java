@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import ru.bjcreslin.domain.ItemsMenuActivatorVariable;
 import ru.bjcreslin.domain.Trener;
 import ru.bjcreslin.domain.jsonobjects.Sport;
 import ru.bjcreslin.service.TrenerDBService;
@@ -17,7 +18,7 @@ import java.util.TreeMap;
 @Log
 @RequestMapping("analise")
 public class AnalysisWebController {
-    private TrenerDBService trenerDBService;
+    private final TrenerDBService trenerDBService;
 
     public AnalysisWebController(TrenerDBService trenerDBService) {
         this.trenerDBService = trenerDBService;
@@ -39,11 +40,12 @@ public class AnalysisWebController {
                 }
             }
         }
-        // Сортируем
+        // Сортируем, переворачиванием мапы в тримап
         Map<Integer, String> sportsCountSort = new TreeMap<>();
         for (Map.Entry<String, Integer> entry : sportsCount.entrySet()) {
             sportsCountSort.put(entry.getValue(), entry.getKey());
         }
+        ItemsMenuActivatorVariable.itemMenuEnabled(model);
         model.addAttribute("mapwithdata", sportsCountSort);
         return "analyse";
     }

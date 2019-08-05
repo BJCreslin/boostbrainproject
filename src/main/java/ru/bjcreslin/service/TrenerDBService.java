@@ -15,9 +15,9 @@ import java.util.List;
 @Service
 @Log
 public class TrenerDBService {
-    private TrenerRepository trenerRepository;
-    private ObjectConversionService objectConversionService;
-    private SportRepository sportRepository;
+    private final TrenerRepository trenerRepository;
+    private final ObjectConversionService objectConversionService;
+    private final SportRepository sportRepository;
 
     public TrenerDBService(TrenerRepository trenerRepository, ObjectConversionService objectConversionService, SportRepository sportRepository) {
         this.trenerRepository = trenerRepository;

@@ -36,8 +36,9 @@
                     Кеширование данных
                 </a>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" th:href="@{/file/savedata}">Сохранить данные в кеш</a>
-                    <a class="dropdown-item" th:href="@{/file/loaddata}">Загрузить данные из кеша </a>
+                    <a th:class="${isCanSaveDisk}? 'dropdown-item' : 'dropdown-item disabled'"
+                       th:href="@{/file/savedata}">Сохранить данные в кеш</a>
+                    <a th:class="${isCanLoadDisk}? 'dropdown-item' : 'dropdown-item disabled'" th:href="@{/file/loaddata}">Загрузить данные из кеша </a>
                 </div>
             </li>
             <li class="nav-item dropdown">
@@ -45,7 +46,8 @@
                     Анализ
                 </a>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" th:href="@{/analise/sport}">Разбивка по видам спорта</a>
+                    <a th:class="${isAnalise}? 'dropdown-item' : 'dropdown-item disabled'" th:href="@{/analise/sport}">Разбивка
+                        по видам спорта</a>
 
                 </div>
             </li>

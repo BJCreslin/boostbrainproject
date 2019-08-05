@@ -59,8 +59,6 @@ public class MosRuDataServer extends DataObiect {
      * @param adress -web adress
      * @return Веб страницу в виде текста
      */
-
-
     @Override
     public String getPageFromUrl(String adress) throws ErrorConectionToMosRuServer {
         StringBuilder text = new StringBuilder();
@@ -84,6 +82,7 @@ public class MosRuDataServer extends DataObiect {
 
     /**
      * генерирует адрес запроса
+     *
      * @param adressPart- часть запроса между адресом сервера , версиейAPI, datasets  и ключом
      * @return полный адрес запроса в виде строки
      */
@@ -97,14 +96,12 @@ public class MosRuDataServer extends DataObiect {
 
     /**
      * Получение версии набора данных с сервера.
-     * @param idDataSets  // "Id": 61321,  - ID данных по тренерам
-     * @return
-     * @throws ErrorConectionToMosRuServer
-     * @throws ErrorApiVersionCheck
+     *
+     * @param idDataSets // "Id": 61321,  - ID данных по тренерам
      */
     @Override
     public DataSetsVersion getDataSetsVersion(int idDataSets) throws ErrorConectionToMosRuServer, ErrorApiVersionCheck {
-        String adress = generatedAdress(idDataSets +"/version");
+        String adress = generatedAdress(idDataSets + "/version");
         String textWithAnswer = getPageFromUrl(adress);
         ObjectMapper mapper = new ObjectMapper();
         DataSetsVersion dataSetsVersion;

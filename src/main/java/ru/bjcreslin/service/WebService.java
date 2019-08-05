@@ -35,7 +35,7 @@ public interface WebService {
 
 
     /**
-     * ерсия api
+     * Версия api
      *
      * @return api
      */

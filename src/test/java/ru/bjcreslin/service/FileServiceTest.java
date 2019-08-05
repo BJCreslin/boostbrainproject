@@ -9,7 +9,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 class FileServiceTest {
-    FileService fileService;
+    private FileService fileService;
 
     @BeforeEach
     void setUp() {

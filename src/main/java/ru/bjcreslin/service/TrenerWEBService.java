@@ -16,15 +16,18 @@ import java.util.List;
 @Service
 public class TrenerWEBService implements WebService {
     private static final String ID_DATA_GROUPE = "61321"; // "Id": 61321,  - ID данных по тренерам
-    private MosRuDataServer dataServer;
+    private final MosRuDataServer dataServer;
     private static int count = 0;
-    private ObjectConversionService objectConversionService;
+    private final ObjectConversionService objectConversionService;
 
     public TrenerWEBService(MosRuDataServer dataServer,ObjectConversionService objectConversionService) {
         this.dataServer = dataServer;
         this.objectConversionService=objectConversionService;
     }
 
+    /**
+     * Возвращает колиество данных
+     */
     @Override
     public int getCount() throws ErrorConectionToMosRuServer {
         /*Если данные по count уже есть, то берем их */
@@ -35,23 +38,34 @@ public class TrenerWEBService implements WebService {
         return count;
     }
 
+    /**
+     * Возвращает все данные в виде лист
+     */
     @Override
     public List<JSONWrapperObject> getAll() throws ErrorParsingTxtJsonToPojo, ErrorConectionToMosRuServer {
         String txt = getTextJSONData();
         return objectConversionService.textToArrayOfJsonConverter(txt);
     }
 
-
+    /**
+     * Возвращает версию АПИ данных Мосдата
+     */
     @Override
     public APIVersion getVersionApi() throws ErrorConectionToMosRuServer, ErrorApiVersionCheck {
         return dataServer.getApiversion();
     }
 
+    /**
+     * Возвращает версию данных набора Мосдата
+     */
     @Override
     public DataSetsVersion getDataSetsVersion() throws ErrorApiVersionCheck, ErrorConectionToMosRuServer {
         return dataServer.getDataSetsVersion(Integer.parseInt(ID_DATA_GROUPE));
     }
 
+    /**
+     * Получает данные с сервера МОСДАТА и возвращает их в виде String
+     */
     @Override
     public String getTextJSONData() throws ErrorConectionToMosRuServer {
         int countAll = getCount();
